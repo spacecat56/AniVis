@@ -1,0 +1,6 @@
+LIBRARY wls_anivis
+EXPORTS
+	getSDKVersion			@1
+	getPluginDefinition		@2
+SECTIONS
+	.data READ WRITE
