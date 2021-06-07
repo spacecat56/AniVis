@@ -32,10 +32,10 @@ public:
 	DzAniVisAction();
 
 protected:
-    void	executeAction() override;
+    void executeAction() override;
 
 private:
-	static wlsAnivisWatcher *anivis_watcher_;
+	static wls_anivis_watcher *anivis_watcher_;
 };
 
 #endif 

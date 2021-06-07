@@ -1,7 +1,7 @@
 /****************************************************************************
 ** Meta object code from reading C++ file 'anivisaction.h'
 **
-** Created: Sun May 7 11:16:18 2017
+** Created: Mon Jun 7 15:14:02 2021
 **      by: The Qt Meta Object Compiler version 63 (Qt 4.8.1)
 **
 ** WARNING! All changes made in this file will be lost!

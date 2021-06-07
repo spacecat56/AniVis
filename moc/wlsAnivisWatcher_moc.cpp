@@ -1,7 +1,7 @@
 /****************************************************************************
 ** Meta object code from reading C++ file 'wlsAnivisWatcher.h'
 **
-** Created: Sun May 7 11:16:18 2017
+** Created: Mon Jun 7 15:14:02 2021
 **      by: The Qt Meta Object Compiler version 63 (Qt 4.8.1)
 **
 ** WARNING! All changes made in this file will be lost!
@@ -17,7 +17,7 @@
 #endif
 
 QT_BEGIN_MOC_NAMESPACE
-static const uint qt_meta_data_wlsAnivisWatcher[] = {
+static const uint qt_meta_data_wls_anivis_watcher[] = {
 
  // content:
        6,       // revision
@@ -31,62 +31,62 @@ static const uint qt_meta_data_wlsAnivisWatcher[] = {
        0,       // signalCount
 
  // slots: signature, parameters, type, tag, flags
-      18,   17,   17,   17, 0x0a,
-      35,   17,   17,   17, 0x0a,
-      56,   51,   17,   17, 0x0a,
-      78,   17,   17,   17, 0x0a,
+      20,   19,   19,   19, 0x0a,
+      39,   19,   19,   19, 0x0a,
+      62,   57,   19,   19, 0x0a,
+      86,   19,   19,   19, 0x0a,
 
        0        // eod
 };
 
-static const char qt_meta_stringdata_wlsAnivisWatcher[] = {
-    "wlsAnivisWatcher\0\0onSceneCleared()\0"
-    "onSceneLoaded()\0time\0onTimeChanged(DzTime)\0"
-    "onAnivisValueChanged()\0"
+static const char qt_meta_stringdata_wls_anivis_watcher[] = {
+    "wls_anivis_watcher\0\0on_scene_cleared()\0"
+    "on_scene_loaded()\0time\0on_time_changed(DzTime)\0"
+    "on_anivis_value_changed()\0"
 };
 
-void wlsAnivisWatcher::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, void **_a)
+void wls_anivis_watcher::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, void **_a)
 {
     if (_c == QMetaObject::InvokeMetaMethod) {
         Q_ASSERT(staticMetaObject.cast(_o));
-        wlsAnivisWatcher *_t = static_cast<wlsAnivisWatcher *>(_o);
+        wls_anivis_watcher *_t = static_cast<wls_anivis_watcher *>(_o);
         switch (_id) {
-        case 0: _t->onSceneCleared(); break;
-        case 1: _t->onSceneLoaded(); break;
-        case 2: _t->onTimeChanged((*reinterpret_cast< DzTime(*)>(_a[1]))); break;
-        case 3: _t->onAnivisValueChanged(); break;
+        case 0: _t->on_scene_cleared(); break;
+        case 1: _t->on_scene_loaded(); break;
+        case 2: _t->on_time_changed((*reinterpret_cast< DzTime(*)>(_a[1]))); break;
+        case 3: _t->on_anivis_value_changed(); break;
         default: ;
         }
     }
 }
 
-const QMetaObjectExtraData wlsAnivisWatcher::staticMetaObjectExtraData = {
+const QMetaObjectExtraData wls_anivis_watcher::staticMetaObjectExtraData = {
     0,  qt_static_metacall 
 };
 
-const QMetaObject wlsAnivisWatcher::staticMetaObject = {
-    { &QObject::staticMetaObject, qt_meta_stringdata_wlsAnivisWatcher,
-      qt_meta_data_wlsAnivisWatcher, &staticMetaObjectExtraData }
+const QMetaObject wls_anivis_watcher::staticMetaObject = {
+    { &QObject::staticMetaObject, qt_meta_stringdata_wls_anivis_watcher,
+      qt_meta_data_wls_anivis_watcher, &staticMetaObjectExtraData }
 };
 
 #ifdef Q_NO_DATA_RELOCATION
-const QMetaObject &wlsAnivisWatcher::getStaticMetaObject() { return staticMetaObject; }
+const QMetaObject &wls_anivis_watcher::getStaticMetaObject() { return staticMetaObject; }
 #endif //Q_NO_DATA_RELOCATION
 
-const QMetaObject *wlsAnivisWatcher::metaObject() const
+const QMetaObject *wls_anivis_watcher::metaObject() const
 {
     return QObject::d_ptr->metaObject ? QObject::d_ptr->metaObject : &staticMetaObject;
 }
 
-void *wlsAnivisWatcher::qt_metacast(const char *_clname)
+void *wls_anivis_watcher::qt_metacast(const char *_clname)
 {
     if (!_clname) return 0;
-    if (!strcmp(_clname, qt_meta_stringdata_wlsAnivisWatcher))
-        return static_cast<void*>(const_cast< wlsAnivisWatcher*>(this));
+    if (!strcmp(_clname, qt_meta_stringdata_wls_anivis_watcher))
+        return static_cast<void*>(const_cast< wls_anivis_watcher*>(this));
     return QObject::qt_metacast(_clname);
 }
 
-int wlsAnivisWatcher::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
+int wls_anivis_watcher::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
 {
     _id = QObject::qt_metacall(_c, _id, _a);
     if (_id < 0)

@@ -20,93 +20,97 @@
 #include "dznode.h"
 #include "dzboolproperty.h"
 
-wlsAnivisWatcher::wlsAnivisWatcher(void)
+wls_anivis_watcher::wls_anivis_watcher(void)
 {
-	mHasSome = false;
-	mHooked = false;
-	mRealPropertyName = "Visible";
-	mHandlingTimeChange = false;
-
+	has_anivis_property_ = false;
+	hooked_ = false;
+	real_property_name_ = "Visible";
+	handling_time_change_ = false;
 }
 
-void wlsAnivisWatcher::markedAnode()
+void wls_anivis_watcher::node_marked()
 {
-	mHasSome = true;
+	has_anivis_property_ = true;
 }
 
-void wlsAnivisWatcher::hookTheScene()
+void wls_anivis_watcher::hook_scene()
 {
-	if (mHooked)
+	if (hooked_)
 		return;
 	connect( dzScene, SIGNAL( sceneCleared() ), this, SLOT( onSceneCleared() ) );
 	connect( dzScene, SIGNAL( sceneLoaded() ), this, SLOT( onSceneLoaded() ) );
 	connect( dzScene, SIGNAL( timeChanged(DzTime ) ), this, SLOT( onTimeChanged(DzTime ) ) );
 
-	mHooked = true;
+	hooked_ = true;
 }
 
 
-wlsAnivisWatcher::~wlsAnivisWatcher(void)
+wls_anivis_watcher::~wls_anivis_watcher(void) = default;
+
+void wls_anivis_watcher::on_scene_cleared()
 {
+	has_anivis_property_ = false;
 }
 
-void wlsAnivisWatcher::onSceneCleared()
+void wls_anivis_watcher::on_scene_loaded()
 {
-	mHasSome = false;
-}
-
-void wlsAnivisWatcher::onSceneLoaded()
-{
-		mHasSome = false;
+		has_anivis_property_ = false;
 		DzNodeListIterator nli = dzScene->nodeListIterator();
 		while (nli.hasNext()) 
 		{
 			DzNode *node = nli.next();
-			DzProperty * aProp = node->findProperty(DzAniVisAction::PropertyName);
-			if (aProp) 
+			DzProperty * dz_property = node->findProperty(DzAniVisAction::property_name);
+			if (dz_property) 
 			{
-				mHasSome = true;
-				connect(aProp, SIGNAL (currentValueChanged() ), this, SLOT(onAnivisValueChanged()));
+				has_anivis_property_ = true;
+				connect(dz_property, SIGNAL (currentValueChanged() ), this, SLOT(onAnivisValueChanged()));
 			}
 		}
-		onTimeChanged(dzScene->getTime());
+		on_time_changed(dzScene->getTime());
 }
 
-void wlsAnivisWatcher::onTimeChanged(DzTime time)
+void wls_anivis_watcher::on_time_changed(const DzTime time)
 {
-	if (mHasSome) 
+	if (has_anivis_property_) 
 	{
-		mHandlingTimeChange = true;
-		DzBoolProperty *prop;
-		DzBoolProperty *realprop;
-		DzNodeListIterator nli = dzScene->nodeListIterator();
+		handling_time_change_ = true;
+        DzNodeListIterator nli = dzScene->nodeListIterator();
+
 		while (nli.hasNext()) 
 		{
 			DzNode *node = nli.next();
-			prop = (DzBoolProperty *)node->findProperty(DzAniVisAction::PropertyName);
-			if (prop) 
+            const auto dz_anivis_property = dynamic_cast<DzBoolProperty*>(node->findProperty(DzAniVisAction::property_name));
+			if (dz_anivis_property) 
 			{
-				bool mVis = prop->getBoolValue(time);
-				realprop = (DzBoolProperty *)node->findProperty(mRealPropertyName);
-				realprop->setBoolValue(mVis);
+                const bool visible = dz_anivis_property->getBoolValue(time);
+                auto dz_visibility_property = dynamic_cast<DzBoolProperty*>(node->findProperty(real_property_name_));
+				dz_visibility_property->setBoolValue(visible);
 			}
 		}
 	}
-	mHandlingTimeChange = false;
+	handling_time_change_ = false;
 }
 
 
-void wlsAnivisWatcher::onAnivisValueChanged() 
+void wls_anivis_watcher::on_anivis_value_changed() const
 {
-	if (mHandlingTimeChange) return;
-	QObject *oSender = sender();
-	DzBoolProperty *bppSender = dynamic_cast<DzBoolProperty*>(oSender);
-	if (bppSender == NULL) return;
-	DzElement *ele = bppSender->getOwner();
-	if (ele == NULL) return;
-	DzProperty *baseProp = ele->findProperty("Visible");
-	if (baseProp == NULL) return;
-	DzBoolProperty *bppBase = dynamic_cast<DzBoolProperty*>(baseProp);
-	if (bppBase == NULL) return;
-	bppBase->setBoolValue(bppSender->getBoolValue());
+	if (handling_time_change_) return;
+
+	QObject *q_sender = sender();
+    const auto dz_anivis_property = dynamic_cast<DzBoolProperty*>(q_sender);
+
+    if (dz_anivis_property == nullptr) return;
+
+	DzElement *ele = dz_anivis_property->getOwner();
+
+    if (ele == nullptr) return;
+	DzProperty *dz_property = ele->findProperty("Visible");
+
+    if (dz_property == nullptr) return;
+
+    auto dz_visibility_property = dynamic_cast<DzBoolProperty*>(dz_property);
+
+    if (dz_visibility_property == nullptr) return;
+
+    dz_visibility_property->setBoolValue(dz_anivis_property->getBoolValue());
 }

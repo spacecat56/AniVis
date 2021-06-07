@@ -17,27 +17,27 @@
 #pragma once
 #include "dzscene.h"
 
-class wlsAnivisWatcher : public QObject
+class wls_anivis_watcher : public QObject
 {
-	Q_OBJECT
-public:
-	wlsAnivisWatcher(void);
-	~wlsAnivisWatcher(void);
+Q_OBJECT
+    public:
+	    wls_anivis_watcher(void);
+	    ~wls_anivis_watcher(void) override;
 
-	void hookTheScene();
+	    void hook_scene();
 
-	void markedAnode();
+	    void node_marked();
 
-public slots:
-	void onSceneCleared(); 
-	void onSceneLoaded();
-	void onTimeChanged (DzTime time);
-	void onAnivisValueChanged();
+    public slots:
+	    void on_scene_cleared(); 
+	    void on_scene_loaded();
+	    void on_time_changed (DzTime time);
+	    void on_anivis_value_changed() const;
 
-private:
-	bool mHasSome;
-	bool mHooked;
-	QString mRealPropertyName;
-	bool mHandlingTimeChange;
+    private:
+	    bool has_anivis_property_;
+	    bool hooked_;
+	    QString real_property_name_;
+	    bool handling_time_change_;
 };
 
