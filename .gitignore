@@ -28,3 +28,7 @@
 *.out
 *.app
 release
+/.vs/
+/Debug/
+/exec/Debug/
+/*.vcxproj.user
