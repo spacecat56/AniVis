@@ -22,47 +22,59 @@
 #include "dzscene.h"
 #include "dznode.h"
 #include "dzboolproperty.h"
+#include "dzsettings.h"
+#include "dzpropertysettings.h"
+#include "dzpresentation.h"
 
 #include "anivisaction.h"
 
 
-const QString DzAniVisAction::PropertyName = "AnimateVisibility";
-wlsAnivisWatcher *DzAniVisAction::myWatcher = 0; //new wlsAnivisWatcher();
+const QString DzAniVisAction::property_name = "AnimateVisibility";
+
+wlsAnivisWatcher *DzAniVisAction::anivis_watcher_ = nullptr; //new wlsAnivisWatcher();
 
 DzAniVisAction::DzAniVisAction() :
 	DzEditAction( "Add AniVis Property", "Add the Animate Visibility to the selected Node(s)" )
 {
 	// create the watcher
-	myWatcher = new wlsAnivisWatcher();
-	myWatcher->hookTheScene();
+	anivis_watcher_ = new wlsAnivisWatcher();
+	anivis_watcher_->hookTheScene();
 }
 
 void DzAniVisAction::executeAction()
 {
-
 	DzMainWindow *mw = dzApp->getInterface();
 	if( !mw )
 	{
 		return;
 	}
 
-	if (!DzAniVisAction::myWatcher) {
-		DzAniVisAction::myWatcher = new wlsAnivisWatcher();
-		myWatcher->hookTheScene();
+	if (!anivis_watcher_) {
+        anivis_watcher_ = new wlsAnivisWatcher();
+		anivis_watcher_->hookTheScene();
 	}
 
-	QObjectList nodes = dzScene->getSelectedNodeList();
+    const QObjectList nodes = dzScene->getSelectedNodeList();
 
 	for (int i = 0; i < nodes.count(); i++) 
 	{
-		DzNode *node = (DzNode *)nodes.at(i);
-		if (node->findProperty(PropertyName) == NULL)
+        auto node = dynamic_cast<DzNode*>(nodes.at(i));
+		if (node->findProperty(property_name) == nullptr)
 		{
-			DzBoolProperty *wedge = new DzBoolProperty(PropertyName, true, true, true);
-			wedge->makePersistent();
-			node->addProperty(wedge);
-			DzAniVisAction::myWatcher->markedAnode();
-			connect(wedge, SIGNAL (currentValueChanged() ), myWatcher, SLOT(onAnivisValueChanged()));
+            auto dz_property = new DzBoolProperty(property_name, true, true, true);
+			auto dz_presentation = new DzPresentation();
+
+			dz_property->makePersistent();
+			dz_property->setLabel("Animate Visibility");
+			dz_property->setPath("Display");			
+			dz_presentation->setType("Modifier/Pose");
+			dz_presentation->setColorA(*new QColor(255, 255, 125));
+			dz_presentation->setColorB(*new QColor(255, 255, 220));
+			dz_property->setPresentation(dz_presentation);
+
+			node->addProperty(dz_property);
+            anivis_watcher_->markedAnode();
+			connect(dz_property, SIGNAL (currentValueChanged() ), anivis_watcher_, SLOT(onAnivisValueChanged()));
 		}
 	}
 
